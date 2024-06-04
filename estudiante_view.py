@@ -102,7 +102,7 @@ def estudiante_view(page: ft.Page):
             )
 
         page.add(page.drawer)
-
+        
         bar = ft.Container(
                 ft.Column(
                     [
@@ -115,7 +115,7 @@ def estudiante_view(page: ft.Page):
                     ]
                 )
             )
-        
+        bar.visible = False
         datos = ft.Container(
                 ft.Column(
                     [
@@ -190,7 +190,7 @@ def estudiante_view(page: ft.Page):
                     alignment=ft.MainAxisAlignment.CENTER,
                 )
             )
-        
+        datos.visible = False
         calificaciones = ft.Container(
                 ft.Column(
                     [
@@ -268,7 +268,7 @@ def estudiante_view(page: ft.Page):
                     ]
                 )
             )
-        
+        calificaciones.visible = False
 
         def loginAlumno(username, password):
             conexiondb = create_connection(host_name, user_name, user_password, db_name)
