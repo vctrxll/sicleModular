@@ -3,6 +3,7 @@ import flet as ft
 from main_view import main_view
 from estudiante_view import estudiante_view
 from admin_view import admin_view
+from docente_view import docente_view
 
 def main(page: ft.Page):
     page.title = "SICLE - Sistema Integrador de Calificaciones"
@@ -24,8 +25,7 @@ def main(page: ft.Page):
         elif page.route == "/estudiante":
             page.views.append(estudiante_view(page))
         elif page.route == "/docente":
-            print("Hola")
-            #page.views.append(docente_view(page))
+            page.views.append(docente_view(page))
         elif page.route == "/admin":
             page.views.append(admin_view(page))
         page.update()

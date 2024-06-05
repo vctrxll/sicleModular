@@ -2,48 +2,8 @@ import flet as ft
 import mysql.connector
 from mysql.connector import Error
 
-host_name = "localhost"
-user_name = "root"
-user_password = "" 
-db_name = "siclev2"
 
-
-def create_connection(host_name, user_name, user_password, db_name):
-    connection = None
-    try:
-        connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            password=user_password,
-            database=db_name
-        )
-    except Error as e:
-        print(f"The error '{e}' occurred")
-    return connection
-
-def dataAlumno_view(page: ft.Page,id_alumno):
-    conexiondb = create_connection(host_name, user_name, user_password, db_name)
-    if conexiondb is not None:
-        try:
-            cursor = conexiondb.cursor()
-
-            # Consulta SQL para obtener datos del alumno (usando el ID recibido)
-            cursor.execute("SELECT id, apellido_paterno, apellido_materno, nombres, carrera, genero FROM alumnos WHERE id = %s", (id_alumno,))
-            alumno_data = cursor.fetchone()
-            control = str(alumno_data[0])
-            nombreCompleto = str(alumno_data[3]) + " " + str(alumno_data[1])  + " " + str(alumno_data[2]) 
-            carrera = str(alumno_data[4]) 
-
-            # Consulta SQL para obtener calificaciones (usando el ID recibido)
-            cursor.execute("SELECT * FROM calificaciones WHERE id_alumno = %s", (id_alumno,)) 
-            grade_data = cursor.fetchall()
-
-        except Error as e:
-            print(f"Error al ejecutar las consultas: {e}")
-        finally:
-            conexiondb.close()
-    else:
-        print("No se pudo establecer la conexión a la base de datos.")
+def dataAlumno_view(page: ft.Page):
 
     barra = ft.Container(
         ft.ResponsiveRow(
@@ -114,7 +74,7 @@ def dataAlumno_view(page: ft.Page,id_alumno):
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("No. Control: ")),
-                                        ft.DataCell(ft.Text(control)),
+                                        ft.DataCell(ft.Text("-")),
                                     ]
                                 ),
                                 ft.DataRow(
@@ -132,7 +92,7 @@ def dataAlumno_view(page: ft.Page,id_alumno):
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("Nombre: ")),
-                                        ft.DataCell(ft.Text(nombreCompleto)),
+                                        ft.DataCell(ft.Text("-")),
                                     ]
                                 ),
                                 ft.DataRow(
@@ -144,7 +104,7 @@ def dataAlumno_view(page: ft.Page,id_alumno):
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("Carrera: ")),
-                                        ft.DataCell(ft.Text(carrera)),
+                                        ft.DataCell(ft.Text("-")),
                                     ]
                                 ),
                             ],

@@ -1,7 +1,6 @@
 import flet as ft
 import mysql.connector
 from mysql.connector import Error
-from dataAlumno_view import dataAlumno_view
 
 host_name = "localhost"
 user_name = "root"
@@ -21,11 +20,8 @@ def create_connection(host_name, user_name, user_password, db_name):
         print(f"The error '{e}' occurred")
     return connection
 
-
-
 def estudiante_view(page: ft.Page):
-        global session
-        id = ft.TextField(hint_text='Usuario Estudiante', bgcolor='white', border_radius=10, width=380, height=50, adaptive=True)
+        id_usuario= ft.TextField(hint_text='Usuario Estudiante', bgcolor='white', border_radius=10, width=380, height=50, adaptive=True)
         pin = ft.TextField(hint_text='Clave de acceso', bgcolor='white', border_radius=10, width=380, height=50,password = True, adaptive=True)
         barra = ft.Container(ft.ResponsiveRow([
             ft.Text('Sistema Integrador de calificaciones de lenguas extranjeras (SICLE)',
@@ -55,10 +51,10 @@ def estudiante_view(page: ft.Page):
                 ], alignment=ft.MainAxisAlignment.CENTER, height=100),
                 ft.Divider(height=30, color='transparent'),
                 ft.Column([
-                    id, pin,
+                    id_usuario, pin,
                 ]),
                 ft.Row([
-                    ft.FilledButton('Aceptar',on_click = lambda e: loginAlumno(id.value, pin.value), style=ft.ButtonStyle(bgcolor='#3F844B'))
+                    ft.FilledButton('Aceptar',on_click = lambda e: loginAlumno(id_usuario.value, pin.value), style=ft.ButtonStyle(bgcolor='#3F844B'))
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
             padding=20,
@@ -94,11 +90,6 @@ def estudiante_view(page: ft.Page):
                 
                 if user:
                     print("Inicio de sesión exitoso")
-
-                    page.views.clear()
-                    page.views.append(dataAlumno_view(page, id_alumno))  # Llama a la función actualizada
-                    page.update()
-                                ##Despues de esto se debria ver dataAlumo_view y recibir el usuario
                 else:
                     page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
                     page.update()
