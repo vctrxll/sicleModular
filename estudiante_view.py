@@ -1,6 +1,7 @@
 import flet as ft
 import mysql.connector
 from mysql.connector import Error
+from dataAlumno_view import dataAlumno_view
 
 host_name = "localhost"
 user_name = "root"
@@ -35,7 +36,7 @@ def estudiante_view(page: ft.Page):
             )], alignment=ft.MainAxisAlignment.CENTER, spacing=1,  # Espacio entre elementos en la fila
         run_spacing={"xs": 5, "sm": 10, "md": 15, "lg": 20} ), bgcolor='#0D257C', padding=10, height=60,)
 
-        container = ft.Container(
+        login_container = ft.Container(
             ft.Column([
                 ft.Container(
                     ft.Row([
@@ -68,216 +69,15 @@ def estudiante_view(page: ft.Page):
             margin=ft.margin.only(top=80, left=page.width*0.05 if page.width < 600 else page.width*0.35)
         )
 
-        def menu(e):
-                page.drawer.open = True
-                page.drawer.update()
 
-        def opciones(e):
-            global session
-            print("opcionesd")  # Podrías quitar este print si no es necesario
-            datos.visible = e.control.selected_index == 0
-            calificaciones.visible = e.control.selected_index == 1
-            if e.control.selected_index == 2:
-                session = False
-                page.remove(page.drawer)
-                page.drawer = None
-                page.go("/")  # Redirigir al inicio de sesión
-            page.update()
-
-        page.drawer = ft.NavigationDrawer(
-            controls=[
-                ft.Divider(thickness=2),
-                ft.NavigationDrawerDestination(
-                    icon_content=ft.Icon(ft.icons.PERSON), label="Datos Personales"
-                ),
-                ft.NavigationDrawerDestination(
-                    icon_content=ft.Icon(ft.icons.FORMAT_LIST_NUMBERED),
-                    label="Calificaciones",
-                ),
-                ft.Divider(thickness=2),
-                ft.NavigationDrawerDestination(
-                    icon_content=ft.Icon(ft.icons.HIGHLIGHT_OFF), label="Salir"
-                ),],
-                on_change=opciones,
-            )
-
-        page.add(page.drawer)
-        
-        bar = ft.Container(
-                ft.Column(
-                    [
-                        ft.Container(
-                            content=ft.IconButton(
-                                ft.icons.MENU, padding=20, on_click=menu
-                            ),
-                            margin=ft.margin.only(left=-10),
-                        )
-                    ]
-                )
-            )
-        bar.visible = False
-        datos = ft.Container(
-                ft.Column(
-                    [
-                        ft.Row(
-                            [
-                                ft.Container(
-                                    content=ft.Text(
-                                        "Datos Personales",
-                                        color="white",
-                                        text_align="center",
-                                        size=20,
-                                    ),
-                                    bgcolor="#0D257C",
-                                    width=250,
-                                    height=50,
-                                    alignment=ft.alignment.center,
-                                    border_radius=30,
-                                )
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER,
-                        ),
-                        ft.Row(
-                            [
-                                ft.DataTable(
-                                    columns=[
-                                        ft.DataColumn(ft.Text("")),
-                                        ft.DataColumn(ft.Text("")),
-                                    ],
-                                    rows=[
-                                        ft.DataRow(
-                                            cells=[
-                                                ft.DataCell(ft.Text("No. Control: ")),
-                                                ft.DataCell(ft.Text("control")),
-                                            ]
-                                        ),
-                                        ft.DataRow(
-                                            cells=[
-                                                ft.DataCell(ft.Text("Extencion: ")),
-                                                ft.DataCell(ft.Text("(TX) TUX")),
-                                            ]
-                                        ),
-                                        ft.DataRow(
-                                            cells=[
-                                                ft.DataCell(ft.Text("Coordinador: ")),
-                                                ft.DataCell(ft.Text("")),
-                                            ]
-                                        ),
-                                        ft.DataRow(
-                                            cells=[
-                                                ft.DataCell(ft.Text("Nombre: ")),
-                                                ft.DataCell(ft.Text("nombreCompleto")),
-                                            ]
-                                        ),
-                                        ft.DataRow(
-                                            cells=[
-                                                ft.DataCell(ft.Text("Modalidad: ")),
-                                                ft.DataCell(ft.Text("Presencial")),
-                                            ]
-                                        ),
-                                        ft.DataRow(
-                                            cells=[
-                                                ft.DataCell(ft.Text("Carrera: ")),
-                                                ft.DataCell(ft.Text("carrera")),
-                                            ]
-                                        ),
-                                    ],
-                                )
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER,
-                        ),
-                    ],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                )
-            )
-        datos.visible = False
-        calificaciones = ft.Container(
-                ft.Column(
-                    [
-                        ft.Row(
-                            [
-                                ft.Container(
-                                    content=ft.Text(
-                                        "Calificaciones",
-                                        color="white",
-                                        text_align="center",
-                                        size=20,
-                                    ),
-                                    bgcolor="#0D257C",
-                                    width=250,
-                                    height=50,
-                                    alignment=ft.alignment.center,
-                                    border_radius=30,
-                                )
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER,
-                        ),
-                        ft.Row(
-                            [
-                                ft.DataTable(
-                                    columns=[
-                                        ft.DataColumn(ft.Text("Modulo")),
-                                        ft.DataColumn(ft.Text("   ")),
-                                        ft.DataColumn(ft.Text("Parcial 1")),
-                                        ft.DataColumn(ft.Text("Parcial 2")),
-                                        ft.DataColumn(ft.Text("Final")),
-                                    ],
-                                    rows=[
-                                        ft.DataRow(
-                                            cells=[
-                                                ft.DataCell(ft.Text(f"Modulo {i}")),
-                                                ft.DataCell(ft.Text("")),
-                                                ft.DataCell(ft.Text("")),
-                                                ft.DataCell(ft.Text("")),
-                                                ft.DataCell(ft.Text("")),
-                                            ]
-                                        )
-                                        for i in range(1, 6)
-                                    ],
-                                    column_spacing=20,
-                                ),
-                                ft.DataTable(
-                                    columns=[
-                                        ft.DataColumn(ft.Text("Modulo")),
-                                        ft.DataColumn(ft.Text("   ")),
-                                        ft.DataColumn(ft.Text("Parcial 1")),
-                                        ft.DataColumn(ft.Text("Parcial 2")),
-                                        ft.DataColumn(ft.Text("Final")),
-                                    ],
-                                    rows=[
-                                        ft.DataRow(
-                                            cells=[
-                                                ft.DataCell(ft.Text(f"Modulo {i}")),
-                                                ft.DataCell(ft.Text("")),
-                                                ft.DataCell(ft.Text("")),
-                                                ft.DataCell(ft.Text("")),
-                                                ft.DataCell(ft.Text("")),
-                                            ]
-                                        )
-                                        for i in range(6, 11)
-                                    ],
-                                    column_spacing=20,
-                                ),
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER,
-                        ),
-                        ft.Row(
-                            [ft.Text("Calificacion Final: ")],
-                            alignment=ft.MainAxisAlignment.CENTER,
-                        ),
-                    ]
-                )
-            )
-        calificaciones.visible = False
-
-        def loginAlumno(username, password):
+        def loginAlumno(id_alumno, password):
             conexiondb = create_connection(host_name, user_name, user_password, db_name)
             cursor = conexiondb.cursor()
 
             # Verificar si el ID d usuario existe
             cursor.execute('''
             SELECT id_alumno FROM login WHERE id_alumno = %s
-            ''', (username,)) 
+            ''', (id_alumno,)) 
             
             user = cursor.fetchone()
             
@@ -288,22 +88,22 @@ def estudiante_view(page: ft.Page):
                 # Si el ID existe, verificar el PIN
                 cursor.execute('''
                 SELECT * FROM login WHERE id_alumno = %s AND pin = %s
-                ''', (username, password))
+                ''', (id_alumno, password))
                 
                 user = cursor.fetchone()
                 
                 if user:
-                    session = True
-                    datos.visible = True
-                    calificaciones.visible = False
-                    bar.visible = True
-                    container.visible = False
-                    page.update()
                     print("Inicio de sesión exitoso")
+
+                    page.views.clear()
+                    page.views.append(dataAlumno_view(page, id_alumno))  # Llama a la función actualizada
+                    page.update()
+                                ##Despues de esto se debria ver dataAlumo_view y recibir el usuario
                 else:
                     page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
                     page.update()
-            
+            cursor.close()  # Cerramos el cursor
             conexiondb.close()
-        return ft.View("/estudiante", [barra, bar, page.drawer, container, datos, calificaciones])
+
+        return ft.View("/estudiante", [barra, login_container])
     
