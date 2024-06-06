@@ -1,9 +1,9 @@
 import flet as ft
 
 from main_view import main_view
-from estudiante_view import estudiante_view
-from admin_view import admin_view
-from docente_view import docente_view
+from Alumno.estudiante_view import estudiante_view
+from Administrador.admin_view import admin_view
+from Docente.docente_view import docente_view
 
 def main(page: ft.Page):
     page.title = "SICLE - Sistema Integrador de Calificaciones"

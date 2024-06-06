@@ -2,8 +2,49 @@ import flet as ft
 import mysql.connector
 from mysql.connector import Error
 
+host_name = "localhost"
+user_name = "root"
+user_password = "" 
+db_name = "siclev2"
 
-def dataAlumno_view(page: ft.Page):
+def create_connection(host_name, user_name, user_password, db_name):
+    connection = None
+    try:
+        connection = mysql.connector.connect(
+            host=host_name,
+            user=user_name,
+            password=user_password,
+            database=db_name
+        )
+    except Error as e:
+        print(f"The error '{e}' occurred")
+    return connection
+
+
+
+def dataAlumno_view(page: ft.Page,id_alumno):
+    conexiondb = create_connection(host_name, user_name, user_password, db_name)
+    if conexiondb is not None:
+        try:
+            cursor = conexiondb.cursor()
+
+            # Consulta SQL para obtener datos del alumno (usando el ID recibido)
+            cursor.execute("SELECT id, apellido_paterno, apellido_materno, nombres, carrera, genero FROM alumnos WHERE id = %s", (id_alumno,))
+            alumno_data = cursor.fetchone()
+            control = str(alumno_data[0])
+            nombreCompleto = str(alumno_data[3]) + " " + str(alumno_data[1])  + " " + str(alumno_data[2]) 
+            carrera = str(alumno_data[4]) 
+
+            # Consulta SQL para obtener calificaciones (usando el ID recibido)
+            cursor.execute("SELECT * FROM calificaciones WHERE id_alumno = %s", (id_alumno,)) 
+            grade_data = cursor.fetchall()
+
+        except Error as e:
+            print(f"Error al ejecutar las consultas: {e}")
+        finally:
+            conexiondb.close()
+    else:
+        print("No se pudo establecer la conexión a la base de datos.")
 
     barra = ft.Container(
         ft.ResponsiveRow(
@@ -26,22 +67,6 @@ def dataAlumno_view(page: ft.Page):
         height=60,
     )
 
-    def menu(e):
-        page.drawer.open = True
-        page.drawer.update()
-
-    bar = ft.Container(
-        ft.Column(
-            [
-                ft.Container(
-                    content=ft.IconButton(
-                        ft.icons.MENU, on_click=menu
-                    ),
-                    margin=ft.margin.only(left=-10),
-                )
-            ]
-        )
-    )
     datos = ft.Container(
         ft.Column(
             [
@@ -74,7 +99,7 @@ def dataAlumno_view(page: ft.Page):
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("No. Control: ")),
-                                        ft.DataCell(ft.Text("-")),
+                                        ft.DataCell(ft.Text(control)),
                                     ]
                                 ),
                                 ft.DataRow(
@@ -92,7 +117,7 @@ def dataAlumno_view(page: ft.Page):
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("Nombre: ")),
-                                        ft.DataCell(ft.Text("-")),
+                                        ft.DataCell(ft.Text(nombreCompleto)),
                                     ]
                                 ),
                                 ft.DataRow(
@@ -104,7 +129,7 @@ def dataAlumno_view(page: ft.Page):
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("Carrera: ")),
-                                        ft.DataCell(ft.Text("-")),
+                                        ft.DataCell(ft.Text(carrera)),
                                     ]
                                 ),
                             ],
@@ -196,41 +221,37 @@ def dataAlumno_view(page: ft.Page):
     )
 
     def opciones(e):
-        if e.control.selected_index == 0:
-            datos.visible = True
-            calificaciones.visible = False
-            page.update()
-        elif e.control.selected_index == 1:
-            calificaciones.visible = True
-            datos.visible = False
-            page.update()
-        elif e.control.selected_index == 2:
-            # Enlazar con el login
-            pass
+        global session
+        datos.visible = e.control.selected_index == 0
+        calificaciones.visible = e.control.selected_index == 1
+        if e.control.selected_index == 2:
+            session = False
+            page.go("/")  # Redirigir al inicio de sesión
+        page.update()
 
-
-    page.drawer = ft.NavigationDrawer(
-        controls=[
-            ft.Divider(thickness=2),
-            ft.NavigationDrawerDestination(
-                icon_content=ft.Icon(ft.icons.PERSON), label="Datos Personales"
-            ),
-            ft.NavigationDrawerDestination(
-                icon_content=ft.Icon(ft.icons.FORMAT_LIST_NUMBERED),
-                label="Calificaciones",
-            ),
-            ft.Divider(thickness=2),
-            ft.NavigationDrawerDestination(
-                icon_content=ft.Icon(ft.icons.HIGHLIGHT_OFF), label="Salir"
-            ),
+    navigation_rail = ft.NavigationRail(
+        selected_index=0,
+        destinations=[
+            ft.NavigationRailDestination(icon=ft.icons.PERSON, label="Datos Personales"),
+            ft.NavigationRailDestination(icon=ft.icons.FORMAT_LIST_NUMBERED, label="Calificaciones"),
+            ft.NavigationRailDestination(icon=ft.icons.EXIT_TO_APP, label="Salir"),
         ],
         on_change=opciones,
+        visible=False
     )
 
     calificaciones.visible = False
-    page.add(barra, bar, datos,calificaciones)
 
-    return ft.View("/estudiante", [barra, bar, datos, calificaciones])
-
-
-ft.app(target=dataAlumno_view, view=ft.AppView.WEB_BROWSER)
+    layout = ft.Row(
+        [
+            navigation_rail,
+            ft.VerticalDivider(width=1),
+            ft.Container(
+                ft.Stack([datos, calificaciones]),
+                expand=True
+            )
+        ],
+        expand=True
+    )
+    navigation_rail.visible = True
+    return ft.View("/estudiante", [barra,layout])

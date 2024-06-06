@@ -1,6 +1,7 @@
 import flet as ft
 import mysql.connector
 from mysql.connector import Error
+from Administrador.dataAdmin_view import dataAdmin_view
 
 host_name = "localhost"
 user_name = "root"
@@ -89,6 +90,8 @@ def admin_view(page: ft.Page):
                 user = cursor.fetchone()
                 
                 if user:
+                    page.views.append(dataAdmin_view(page))
+                    page.update()
                     print("Inicio de sesión exitoso")
                 else:
                     page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)

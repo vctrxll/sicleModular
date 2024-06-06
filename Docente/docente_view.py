@@ -1,6 +1,7 @@
 import flet as ft
 import mysql.connector
 from mysql.connector import Error
+from Docente.dataDocente_view import dataDocente_view
 
 host_name = "localhost"
 user_name = "root"
@@ -84,6 +85,8 @@ def docente_view(page: ft.Page):
                 
                 if user:
                     print("Inicio de sesión exitoso")
+                    page.views.append(dataDocente_view(page))
+                    page.update()
                 else:
                     print("PIN incorrecto")
                     page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
