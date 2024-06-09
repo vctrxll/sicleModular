@@ -9,7 +9,7 @@ def estudiante_view(page: ft.Page):
             ft.Text('Sistema Integrador de calificaciones de lenguas extranjeras (SICLE)',
                 font_family='Open-Sans',
                 weight=ft.FontWeight.BOLD,
-                size= page.height * 0.017,# Ajuste responsivo del tamaño del texto
+                size= 20,# Ajuste responsivo del tamaño del texto
                 color='white', text_align='center'
             )], alignment=ft.MainAxisAlignment.CENTER, spacing=1,  # Espacio entre elementos en la fila
         run_spacing={"xs": 5, "sm": 10, "md": 15, "lg": 20} ), bgcolor='#0D257C', padding=10, height=60,)
@@ -41,8 +41,8 @@ def estudiante_view(page: ft.Page):
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
             padding=20,
-            width=page.width*0.8 if page.width < 600 else page.width*0.21,
-            height=page.width*0.8 if page.width < 600 else page.width*0.21,
+            width=page.width*0.5 if page.width < 600 else page.width*0.21,
+            height=page.width*0.5 if page.width < 600 else page.width*0.21,
             bgcolor='#0D257C',
             border_radius=40,
 

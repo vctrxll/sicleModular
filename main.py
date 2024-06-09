@@ -8,7 +8,6 @@ from Docente.docente_view import docente_view
 def main(page: ft.Page):
     page.title = "SICLE - Sistema Integrador de Calificaciones"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.favicon = "/assets/logo.ico"
 
     def goEstu(e):
         page.go('/estudiante')
@@ -34,4 +33,4 @@ def main(page: ft.Page):
     page.on_route_change = route_change
     page.go(page.route)
 
-ft.app(target=main, view=ft.AppView.WEB_BROWSER, assets_dir="assets")
+ft.app(target=main, view=ft.AppView.WEB_BROWSER)
