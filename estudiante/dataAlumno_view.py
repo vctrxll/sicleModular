@@ -1,50 +1,12 @@
 import flet as ft
-import mysql.connector
-from mysql.connector import Error
 
-host_name = "localhost"
-user_name = "root"
-user_password = "" 
-db_name = "siclev2"
-
-def create_connection(host_name, user_name, user_password, db_name):
-    connection = None
-    try:
-        connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            password=user_password,
-            database=db_name
-        )
-    except Error as e:
-        print(f"The error '{e}' occurred")
-    return connection
-
-
-
-def dataAlumno_view(page: ft.Page,id_alumno):
-    conexiondb = create_connection(host_name, user_name, user_password, db_name)
-    if conexiondb is not None:
-        try:
-            cursor = conexiondb.cursor()
-
-            # Consulta SQL para obtener datos del alumno (usando el ID recibido)
-            cursor.execute("SELECT id, apellido_paterno, apellido_materno, nombres, carrera, genero FROM alumnos WHERE id = %s", (id_alumno,))
-            alumno_data = cursor.fetchone()
-            control = str(alumno_data[0])
-            nombreCompleto = str(alumno_data[3]) + " " + str(alumno_data[1])  + " " + str(alumno_data[2]) 
-            carrera = str(alumno_data[4]) 
-
-            # Consulta SQL para obtener calificaciones (usando el ID recibido)
-            cursor.execute("SELECT * FROM calificaciones WHERE id_alumno = %s", (id_alumno,)) 
-            grade_data = cursor.fetchall()
-
-        except Error as e:
-            print(f"Error al ejecutar las consultas: {e}")
-        finally:
-            conexiondb.close()
-    else:
-        print("No se pudo establecer la conexión a la base de datos.")
+def dataAlumno_view(page: ft.Page, id_usuario):
+    numControl = "21350301"
+    extension = "(TX) TUX"
+    coordinador = " Lic. Alberto Bravo Nava"
+    nombre = "Victor Axel Rodriguez Ocampo"
+    modalidad = "Presencial"
+    carrera = "ISC"
 
     barra = ft.Container(
         ft.ResponsiveRow(
@@ -68,10 +30,8 @@ def dataAlumno_view(page: ft.Page,id_alumno):
     )
 
     datos = ft.Container(
-        ft.Column(
-            [
-                ft.Row(
-                    [
+        ft.Column([
+                ft.Row([
                         ft.Container(
                             content=ft.Text(
                                 "Datos Personales",
@@ -80,14 +40,13 @@ def dataAlumno_view(page: ft.Page,id_alumno):
                                 size=20,
                             ),
                             bgcolor="#0D257C",
-                            width=250,
-                            height=50,
+                            width=page.width * 0.18,
+                            height=page.height * 0.07,
                             alignment=ft.alignment.center,
                             border_radius=30,
                         )
                     ],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                ),
+                    alignment=ft.MainAxisAlignment.CENTER,),
                 ft.Row(
                     [
                         ft.DataTable(
@@ -99,31 +58,31 @@ def dataAlumno_view(page: ft.Page,id_alumno):
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("No. Control: ")),
-                                        ft.DataCell(ft.Text(control)),
+                                        ft.DataCell(ft.Text(numControl)),
                                     ]
                                 ),
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("Extencion: ")),
-                                        ft.DataCell(ft.Text("(TX) TUX")),
+                                        ft.DataCell(ft.Text(extension)),
                                     ]
                                 ),
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("Coordinador: ")),
-                                        ft.DataCell(ft.Text("")),
+                                        ft.DataCell(ft.Text(coordinador)),
                                     ]
                                 ),
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("Nombre: ")),
-                                        ft.DataCell(ft.Text(nombreCompleto)),
+                                        ft.DataCell(ft.Text(nombre)),
                                     ]
                                 ),
                                 ft.DataRow(
                                     cells=[
                                         ft.DataCell(ft.Text("Modalidad: ")),
-                                        ft.DataCell(ft.Text("Presencial")),
+                                        ft.DataCell(ft.Text(modalidad)),
                                     ]
                                 ),
                                 ft.DataRow(
@@ -163,60 +122,70 @@ def dataAlumno_view(page: ft.Page,id_alumno):
                     ],
                     alignment=ft.MainAxisAlignment.CENTER,
                 ),
-                ft.Row(
-                    [
-                        ft.DataTable(
-                            columns=[
-                                ft.DataColumn(ft.Text("Modulo")),
-                                ft.DataColumn(ft.Text("   ")),
-                                ft.DataColumn(ft.Text("Parcial 1")),
-                                ft.DataColumn(ft.Text("Parcial 2")),
-                                ft.DataColumn(ft.Text("Final")),
-                            ],
-                            rows=[
-                                ft.DataRow(
-                                    cells=[
-                                        ft.DataCell(ft.Text(f"Modulo {i}")),
-                                        ft.DataCell(ft.Text("")),
-                                        ft.DataCell(ft.Text("")),
-                                        ft.DataCell(ft.Text("")),
-                                        ft.DataCell(ft.Text("")),
-                                    ]
+                ft.Container(
+                    expand=True,
+                    content= ft.Column(
+                        scroll="auto",
+                        controls=[
+
+                            ft.ResponsiveRow([
+                                ft.Container(
+                                    ft.DataTable(
+                                        columns=[
+                                            ft.DataColumn(ft.Text("Modulo")),
+                                            ft.DataColumn(ft.Text("   ")),
+                                            ft.DataColumn(ft.Text("Parcial 1")),
+                                            ft.DataColumn(ft.Text("Parcial 2")),
+                                            ft.DataColumn(ft.Text("Final")),
+                                        ],
+                                        rows=[
+                                            ft.DataRow(
+                                                cells=[
+                                                    ft.DataCell(ft.Text(f"Modulo {i}")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                ]
+                                            )
+                                            for i in range(1, 6)
+                                        ], column_spacing=20,
+                                    ), col={"xs": 10, "sm": 10, "md": 6, "lg": 4}
+                                ),
+
+                                ft.Container(
+                                    ft.DataTable(
+                                        columns=[
+                                            ft.DataColumn(ft.Text("Modulo")),
+                                            ft.DataColumn(ft.Text("   ")),
+                                            ft.DataColumn(ft.Text("Parcial 1")),
+                                            ft.DataColumn(ft.Text("Parcial 2")),
+                                            ft.DataColumn(ft.Text("Final")),
+                                        ],
+                                        rows=[
+                                            ft.DataRow(
+                                                cells=[
+                                                    ft.DataCell(ft.Text(f"Modulo {i}")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                ]
+                                            )
+                                            for i in range(6, 11)
+                                        ],
+                                        column_spacing=20,
+                                    ), col={"xs": 10, "sm": 10, "md": 6, "lg": 4}
                                 )
-                                for i in range(1, 6)
-                            ],
-                            column_spacing=20,
-                        ),
-                        ft.DataTable(
-                            columns=[
-                                ft.DataColumn(ft.Text("Modulo")),
-                                ft.DataColumn(ft.Text("   ")),
-                                ft.DataColumn(ft.Text("Parcial 1")),
-                                ft.DataColumn(ft.Text("Parcial 2")),
-                                ft.DataColumn(ft.Text("Final")),
-                            ],
-                            rows=[
-                                ft.DataRow(
-                                    cells=[
-                                        ft.DataCell(ft.Text(f"Modulo {i}")),
-                                        ft.DataCell(ft.Text("")),
-                                        ft.DataCell(ft.Text("")),
-                                        ft.DataCell(ft.Text("")),
-                                        ft.DataCell(ft.Text("")),
-                                    ]
-                                )
-                                for i in range(6, 11)
-                            ],
-                            column_spacing=20,
-                        ),
-                    ],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                ),
-                ft.Row(
-                    [ft.Text("Calificacion Final: ")],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                ),
-            ]
+                            ],alignment=ft.MainAxisAlignment.CENTER,),
+                            ft.Row([
+                                ft.Text("Calificacion Final: ")
+                            ], alignment= ft.MainAxisAlignment.CENTER),
+                        ]
+                    )
+                )
+            ],
+            alignment=ft.MainAxisAlignment.CENTER
         )
     )
 
@@ -255,3 +224,4 @@ def dataAlumno_view(page: ft.Page,id_alumno):
     )
     navigation_rail.visible = True
     return ft.View("/estudiante", [barra,layout])
+    

@@ -31,9 +31,8 @@ def main_view(page: ft.Page, goEstu, goDoc,goAdmin):
             content= ft.Column(
                 scroll="auto",
                 controls=[
-                    ft.ResponsiveRow(
-                        [
-                                                ft.Container(
+                    ft.ResponsiveRow([
+                    ft.Container(
                         ft.Column([
                                 ft.Image(src="https://i.postimg.cc/x1VBNBmk/1.png", width=120, height=120),
                                 ft.TextButton(content=ft.Container(ft.Text(value="Estudiante", weight=ft.FontWeight.W_700, size=20, color="black", text_align='center')),on_click=goEstu),

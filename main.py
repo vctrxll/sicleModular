@@ -1,7 +1,7 @@
 import flet as ft
 
 from main_view import main_view
-from Alumno.estudiante_view import estudiante_view
+from estudiante.estudiante_view import estudiante_view
 from Administrador.admin_view import admin_view
 from Docente.docente_view import docente_view
 
