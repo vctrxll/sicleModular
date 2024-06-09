@@ -1,4 +1,5 @@
 import flet as ft
+import requests
 from Docente.dataDocente_view import dataDocente_view
 
 def docente_view(page: ft.Page):
@@ -36,20 +37,19 @@ def docente_view(page: ft.Page):
         height=60
     )
 
-    def loginDocente(id_docente,pin_docente):
-        user = "12"
-        pin = "12"
-        if user != id_docente:
-            page.snack_bar = ft.SnackBar(ft.Text("ID no existe"), open=True)
+    def loginDocente(id_profesor, password):
+        url = f"https://dbsicle1.viictor-axel11.workers.dev/loginProfesor?id_profesor={id_profesor}&pin={password}"
+        response = requests.get(url)
+        result = response.json()
+        
+        if not result['success']:
+            page.snack_bar = ft.SnackBar(ft.Text(result['message']), open=True)
             page.update()
-        else:            
-            if pin == pin_docente:
-                print("Inicio de sesión exitoso")
-                page.views.append(dataDocente_view(page,id_docente))
-                page.update()
-            else:
-                page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
-                page.update()
+        else:
+            print("Inicio de sesión exitoso")
+            page.views.append(dataDocente_view(page, id_profesor))
+            page.update()
+
 
 
     formulario = ft.Container(
@@ -80,8 +80,6 @@ def docente_view(page: ft.Page):
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
             padding=20,
-            width=page.width*0.8 if page.width < 600 else page.width*0.21,
-            height=page.width*0.8 if page.width < 600 else page.width*0.21,
             bgcolor='#0D257C',
             border_radius=40,
 

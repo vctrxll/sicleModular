@@ -42,8 +42,6 @@ def admin_view(page: ft.Page):
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
             padding=20,
-            width=page.width*0.8 if page.width < 600 else page.width*0.21,
-            height=page.width*0.8 if page.width < 600 else page.width*0.21,
             bgcolor='#0D257C',
             border_radius=40,
 

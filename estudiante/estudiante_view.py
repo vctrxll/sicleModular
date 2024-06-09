@@ -1,4 +1,5 @@
 import flet as ft
+import requests
 from estudiante.dataAlumno_view import dataAlumno_view 
 
 
@@ -59,18 +60,16 @@ def estudiante_view(page: ft.Page):
     )
 
         def loginAlumno(id_alumno, password):
-            user = "21350301"
-            pin = "4955"
-            if user != id_alumno:
-                page.snack_bar = ft.SnackBar(ft.Text("ID de alumno no existe"), open=True)
-                page.update()
-            else:            
-                if pin == password:
-                    print("Inicio de sesión exitoso")
-                    page.views.append(dataAlumno_view(page,id_usuario))
+                url = f"https://dbsicle1.viictor-axel11.workers.dev/loginAlumno?id_alumno={id_alumno}&pin={password}"
+                response = requests.get(url)
+                result = response.json()
+                
+                if not result['success']:
+                    page.snack_bar = ft.SnackBar(ft.Text(result['message']), open=True)
                     page.update()
                 else:
-                    page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
+                    print("Inicio de sesión exitoso")
+                    page.views.append(dataAlumno_view(page, id_alumno))
                     page.update()
 
         return ft.View("/estudiante", [barra, login_container])
