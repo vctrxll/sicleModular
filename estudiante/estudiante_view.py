@@ -41,8 +41,8 @@ def estudiante_view(page: ft.Page):
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
             padding=page.width * 0.02,
-            width=page.width * 0.2 if page.width > 600 else page.width * 0.6,
-            height=page.height * 0.5 if page.width > 600 else page.height * 0.5,
+            width=page.width * 0.2 ,
+            height=page.height * 0.5 
             bgcolor='#0D257C',
             bgcolor='#0D257C',
             border_radius=40,
