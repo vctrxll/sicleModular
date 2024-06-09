@@ -1,26 +1,29 @@
 import flet as ft
-import mysql.connector
-from mysql.connector import Error
 
-host_name = "localhost"
-user_name = "root"
-user_password = "" 
-db_name = "siclev2"
+def dataDocente_view(page: ft.Page,id):
+    options_letras = [
+    ft.dropdown.Option("A"), ft.dropdown.Option("B"), ft.dropdown.Option("C"), ft.dropdown.Option("D"),
+    ft.dropdown.Option("E"), ft.dropdown.Option("F"), ft.dropdown.Option("G"), ft.dropdown.Option("H"),
+    ft.dropdown.Option("I"), ft.dropdown.Option("J"), ft.dropdown.Option("K"), ft.dropdown.Option("L"),
+    ft.dropdown.Option("M"), ft.dropdown.Option("N"), ft.dropdown.Option("O"), ft.dropdown.Option("P"),
+    ft.dropdown.Option("Q"), ft.dropdown.Option("R"), ft.dropdown.Option("S"), ft.dropdown.Option("T"),
+    ft.dropdown.Option("U"), ft.dropdown.Option("V"), ft.dropdown.Option("W"), ft.dropdown.Option("X"),
+    ft.dropdown.Option("Y"), ft.dropdown.Option("Z")]
 
-def create_connection(host_name, user_name, user_password, db_name):
-    connection = None
-    try:
-        connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            password=user_password,
-            database=db_name
-        )
-    except Error as e:
-        print(f"The error '{e}' occurred")
-    return connection
+    options_numeros = [
+    ft.dropdown.Option("1"), ft.dropdown.Option("2"), ft.dropdown.Option("3"), ft.dropdown.Option("4"),
+    ft.dropdown.Option("5"), ft.dropdown.Option("6"), ft.dropdown.Option("7"), ft.dropdown.Option("8"),
+    ft.dropdown.Option("9"), ft.dropdown.Option("10")
+]
+    options_numeros = [
+    ft.dropdown.Option("1"), ft.dropdown.Option("2"), ft.dropdown.Option("3"), ft.dropdown.Option("4"),
+    ft.dropdown.Option("5"), ft.dropdown.Option("6"), ft.dropdown.Option("7"), ft.dropdown.Option("8"),
+    ft.dropdown.Option("9"), ft.dropdown.Option("10")
+]
 
-def dataDocente_view(page: ft.Page):
+
+    numeros = list(range(1, 11))
+
 
     barra = ft.Container(
         ft.ResponsiveRow(
@@ -97,18 +100,18 @@ def dataDocente_view(page: ft.Page):
             ],alignment=ft.MainAxisAlignment.CENTER),
                          ft.Row([
                              ft.Column([
-                                 ft.Text('Seleccionar Modulo'),ft.Dropdown(label='Modulo'),
+                                 ft.Text('Seleccionar Modulo'),ft.Dropdown(options= options_letras,label='Modulo'),
                                         ft.FilledButton('Aceptar',style=ft.ButtonStyle(bgcolor='#0D257C'))
                              ]),
                              ft.Column([
-                                 ft.Text('Seleccionar Grupo'),ft.Dropdown(label='Grupo'),
-                                 ft.FilledButton('Aceptar',style=ft.ButtonStyle(bgcolor='#0D257C'))
+                                 ft.Text('Seleccionar Grupo'),ft.Dropdown(options= options_numeros,label='Grupo'),
+                                 ft.FilledButton('Aceptar',style=ft.ButtonStyle(bgcolor='#0D257C'), disabled = True)
 
                              ])
                          ],alignment=ft.MainAxisAlignment.CENTER,spacing=40),
                 ft.Row([
                     ft.Column([
-                        ft.FilledButton('Continuar',style=ft.ButtonStyle(bgcolor='#0D257C'))
+                        ft.FilledButton('Continuar',style=ft.ButtonStyle(bgcolor='#0D257C'), disabled = True)
                             ])
                         ],alignment=ft.MainAxisAlignment.CENTER)
         ],alignment=ft.MainAxisAlignment.CENTER),

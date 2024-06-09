@@ -1,42 +1,19 @@
 import flet as ft
-import mysql.connector
-from mysql.connector import Error
 from Docente.dataDocente_view import dataDocente_view
-
-host_name = "localhost"
-user_name = "root"
-user_password = "" 
-db_name = "siclev2"
-
-def create_connection(host_name, user_name, user_password, db_name):
-    connection = None
-    try:
-        connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            password=user_password,
-            database=db_name
-        )
-    except Error as e:
-        print(f"The error '{e}' occurred")
-    return connection
 
 def docente_view(page: ft.Page):
     id_docente = ft.TextField(
         hint_text='Usuario Docente',
         bgcolor='white',
         border_radius=10,
-        width=380,
-        height=50,
         adaptive=True
     )
     pin_docente = ft.TextField(
         hint_text='Clave de acceso',
         bgcolor='white',
         border_radius=10,
-        width=380,
-        height=50,
         password=True,
+        can_reveal_password = True,
         adaptive=True
     )
 
@@ -59,81 +36,60 @@ def docente_view(page: ft.Page):
         height=60
     )
 
-    def loginDocente(e):
-        conexiondb = create_connection(host_name, user_name, user_password, db_name)
-        cursor = conexiondb.cursor()
-
-        try:
-            # Verificar si el ID del profesor existe
-            cursor.execute('''
-            SELECT id FROM profesores WHERE id = %s
-            ''', (id_docente.value,)) 
-            
-            user = cursor.fetchone()
-            
-            if not user:
-                print("ID de profesor no existe")
-                page.snack_bar = ft.SnackBar(ft.Text("ID de profesor no existe"), open=True)
+    def loginDocente(id_docente,pin_docente):
+        user = "12"
+        pin = "12"
+        if user != id_docente:
+            page.snack_bar = ft.SnackBar(ft.Text("ID no existe"), open=True)
+            page.update()
+        else:            
+            if pin == pin_docente:
+                print("Inicio de sesión exitoso")
+                page.views.append(dataDocente_view(page,id_docente))
                 page.update()
             else:
-                # Si el ID existe, verificar el PIN
-                cursor.execute('''
-                SELECT * FROM profesores WHERE id = %s AND pin = %s
-                ''', (id_docente.value, pin_docente.value))
-                
-                user = cursor.fetchone()
-                
-                if user:
-                    print("Inicio de sesión exitoso")
-                    page.views.append(dataDocente_view(page))
-                    page.update()
-                else:
-                    print("PIN incorrecto")
-                    page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
-                    page.update()
-        except Error as e:
-            print(f"El error '{e}' ocurrió")
-        finally:
-            cursor.close()
-            conexiondb.close()
+                page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
+                page.update()
 
-    login_container = ft.Container(
-        ft.Column([
-            ft.Container(
-                ft.Row([
-                    ft.Text(
-                        'Inicio de Sesion', 
-                        color='#0D257C', 
-                        weight=ft.FontWeight.BOLD, 
-                        size=20,
-                        font_family='OpenSans',
-                        text_align='center'
-                    )
-                ], alignment=ft.MainAxisAlignment.CENTER),
-                bgcolor='white', 
-                width=450, 
-                height=50, 
-                border_radius=60, 
-                padding=10
-            ),
-            ft.Row([
-                ft.Image('https://i.postimg.cc/rszvbGS4/4.png', border_radius=100)
-            ], alignment=ft.MainAxisAlignment.CENTER, height=100),
-            ft.Divider(height=30, color='transparent'),
+
+    formulario = ft.Container(
             ft.Column([
-                id_docente, 
-                pin_docente
+                ft.Container(
+                    ft.Row([
+                        ft.Text(
+                            'Inicio de Sesion', 
+                            color='#0D257C', 
+                            weight=ft.FontWeight.BOLD, 
+                            size=20,
+                            font_family='OpenSans',
+                            text_align='center'
+                        )
+                    ], alignment=ft.MainAxisAlignment.CENTER),bgcolor='white', width=page.width *0.4,  height=page.height * 0.05, border_radius=60, padding=page.width *0.002
+                ),
+                ft.Row([
+                    ft.Image('https://i.postimg.cc/rszvbGS4/4.png', border_radius=100, height = page.height *0.12)
+                ], alignment=ft.MainAxisAlignment.CENTER),
+                ft.Divider(height=page.height *0.002, color='transparent'),
+                ft.Column([
+                    id_docente, 
+                    pin_docente
+,
+                ]),
+                ft.Row([
+                    ft.FilledButton('Aceptar',on_click = lambda e: loginDocente(id_docente.value, pin_docente.value), style=ft.ButtonStyle(bgcolor='#3F844B'))
+                ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
-            ft.Row([
-                ft.FilledButton('Aceptar', on_click=loginDocente, style=ft.ButtonStyle(bgcolor='#3F844B'))
-            ], alignment=ft.MainAxisAlignment.CENTER),
-        ]),
-        padding=20,
-        width=page.width*0.9 if page.width < 600 else page.width*0.3,
-        height=page.width*0.9 if page.width < 600 else page.width*0.3,
-        bgcolor='#0D257C',
-        border_radius=40,
-        margin=ft.margin.only(top=80, left=page.width*0.05 if page.width < 600 else page.width*0.35)
+            padding=20,
+            width=page.width*0.8 if page.width < 600 else page.width*0.21,
+            height=page.width*0.8 if page.width < 600 else page.width*0.21,
+            bgcolor='#0D257C',
+            border_radius=40,
+
+        )
+    login_container = ft.Container(
+        content= formulario,
+        expand=True,
+        alignment= ft.alignment.center
     )
 
     return ft.View("/docente", [barra, login_container])

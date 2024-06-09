@@ -101,7 +101,7 @@ def dataAlumno_view(page: ft.Page, id_usuario):
         )
     )
 
-    calificaciones = ft.Container(
+    tablas = ft.Container(
         ft.Column(
             [
                 ft.Row(
@@ -188,7 +188,12 @@ def dataAlumno_view(page: ft.Page, id_usuario):
             alignment=ft.MainAxisAlignment.CENTER
         )
     )
-
+    
+    calificaciones = ft.Container(
+        content=tablas,
+        expand= True,
+        alignment= ft.alignment.center
+    )
     def opciones(e):
         global session
         datos.visible = e.control.selected_index == 0

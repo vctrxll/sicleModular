@@ -17,7 +17,7 @@ def main_view(page: ft.Page, goEstu, goDoc,goAdmin):
                 height=60,)
 
         logo = ft.ResponsiveRow([
-        ft.Column([ft.Image('https://i.postimg.cc/PrFD80ML/4.png', width=150, height=150, border_radius=150),
+        ft.Column([ft.Image('https://i.postimg.cc/rszvbGS4/4.png', width=150, height=150, border_radius=150),
                    ft.Text('Instituto Tecnologico de Tuxtepec', text_align='center'),],
             alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER

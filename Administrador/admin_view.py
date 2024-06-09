@@ -1,29 +1,10 @@
 import flet as ft
-import mysql.connector
-from mysql.connector import Error
 from Administrador.dataAdmin_view import dataAdmin_view
 
-host_name = "localhost"
-user_name = "root"
-user_password = "" 
-db_name = "siclev2"
-
-def create_connection(host_name, user_name, user_password, db_name):
-    connection = None
-    try:
-        connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            password=user_password,
-            database=db_name
-        )
-    except Error as e:
-        print(f"The error '{e}' occurred")
-    return connection
 
 def admin_view(page: ft.Page):
-        id_usuario= ft.TextField(hint_text='Usuario administrador', bgcolor='white', border_radius=10, width=380, height=50, adaptive=True)
-        pin = ft.TextField(hint_text='Clave de acceso', bgcolor='white', border_radius=10, width=380, height=50,password = True, adaptive=True)
+        id_admin= ft.TextField(hint_text='Usuario administrador', bgcolor='white', border_radius=10, adaptive=True)
+        pin_admin = ft.TextField(hint_text='Clave de acceso', bgcolor='white', border_radius=10,password = True, adaptive=True, can_reveal_password = True)
         barra = ft.Container(ft.ResponsiveRow([
             ft.Text('Sistema Integrador de calificaciones de lenguas extranjeras (SICLE)',
                 font_family='Open-Sans',
@@ -33,7 +14,7 @@ def admin_view(page: ft.Page):
             )], alignment=ft.MainAxisAlignment.CENTER, spacing=1,  # Espacio entre elementos en la fila
         run_spacing={"xs": 5, "sm": 10, "md": 15, "lg": 20} ), bgcolor='#0D257C', padding=10, height=60,)
 
-        login_container = ft.Container(
+        formulario = ft.Container(
             ft.Column([
                 ft.Container(
                     ft.Row([
@@ -45,58 +26,47 @@ def admin_view(page: ft.Page):
                             font_family='OpenSans',
                             text_align='center'
                         )
-                    ], alignment=ft.MainAxisAlignment.CENTER), bgcolor='white', width=450,  height=50, border_radius=60, padding=10
+                    ], alignment=ft.MainAxisAlignment.CENTER),bgcolor='white', width=page.width *0.4,  height=page.height * 0.05, border_radius=60, padding=page.width *0.002
                 ),
                 ft.Row([
-                    ft.Image('https://i.postimg.cc/rszvbGS4/4.png', border_radius=100)
-                ], alignment=ft.MainAxisAlignment.CENTER, height=100),
-                ft.Divider(height=30, color='transparent'),
+                    ft.Image('https://i.postimg.cc/rszvbGS4/4.png', border_radius=100, height = page.height *0.12)
+                ], alignment=ft.MainAxisAlignment.CENTER),
+                ft.Divider(height=page.height *0.002, color='transparent'),
                 ft.Column([
-                    id_usuario, pin,
+                    id_admin, 
+                    pin_admin
+,
                 ]),
                 ft.Row([
-                    ft.FilledButton('Aceptar',on_click = lambda e: loginAlumno(id_usuario.value, pin.value), style=ft.ButtonStyle(bgcolor='#3F844B'))
+                    ft.FilledButton('Aceptar',on_click = lambda e: loginAdmin(id_admin.value, pin_admin.value), style=ft.ButtonStyle(bgcolor='#3F844B'))
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
             padding=20,
-            width=page.width*0.9 if page.width < 600 else page.width*0.3,
-            height=page.width*0.9 if page.width < 600 else page.width*0.3,
+            width=page.width*0.8 if page.width < 600 else page.width*0.21,
+            height=page.width*0.8 if page.width < 600 else page.width*0.21,
             bgcolor='#0D257C',
             border_radius=40,
-            margin=ft.margin.only(top=80, left=page.width*0.05 if page.width < 600 else page.width*0.35)
+
+        )
+        login_container = ft.Container(
+            content= formulario,
+            expand=True,
+            alignment= ft.alignment.center
         )
 
-
-        def loginAlumno(id_alumno, password):
-            conexiondb = create_connection(host_name, user_name, user_password, db_name)
-            cursor = conexiondb.cursor()
-
-            # Verificar si el ID d usuario existe
-            cursor.execute('''
-            SELECT id_alumno FROM login WHERE id_alumno = %s
-            ''', (id_alumno,)) 
-            
-            user = cursor.fetchone()
-            
-            if not user:
-                page.snack_bar = ft.SnackBar(ft.Text("ID de alumno no existe"), open=True)
+        def loginAdmin(id_admin,password):
+            user = "12"
+            pin = "12"
+            if user != id_admin:
+                page.snack_bar = ft.SnackBar(ft.Text("ID no existe"), open=True)
                 page.update()
-            else:
-                # Si el ID existe, verificar el PIN
-                cursor.execute('''
-                SELECT * FROM login WHERE id_alumno = %s AND pin = %s
-                ''', (id_alumno, password))
-                
-                user = cursor.fetchone()
-                
-                if user:
-                    page.views.append(dataAdmin_view(page))
-                    page.update()
+            else:            
+                if pin == password:
                     print("Inicio de sesión exitoso")
+                    page.views.append(dataAdmin_view(page,id_admin))
+                    page.update()
                 else:
                     page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
                     page.update()
-            cursor.close()  # Cerramos el cursor
-            conexiondb.close()
     
         return ft.View("/admin", [barra, login_container])

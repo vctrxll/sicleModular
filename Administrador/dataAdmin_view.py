@@ -1,7 +1,7 @@
 
 import flet as ft
 
-def dataAdmin_view(page: ft.Page):
+def dataAdmin_view(page: ft.Page, id):
 
     barra = ft.Container(
         ft.ResponsiveRow(
@@ -58,7 +58,7 @@ def dataAdmin_view(page: ft.Page):
             ),
             ft.NavigationDrawerDestination(
                 icon_content=ft.Icon(ft.icons.FORMAT_LIST_NUMBERED),
-                label="Carta de Liberacion"
+                label="Auditorias"
             ),
             ft.NavigationDrawerDestination(
                 icon_content=ft.Icon(ft.icons.HIGHLIGHT_OFF),
@@ -85,7 +85,7 @@ def dataAdmin_view(page: ft.Page):
 
     liberacion = ft.Container(
         ft.Row([
-            ft.Container(content=ft.Text('Carta de Liberacion',color='white',text_align='center',size=20),bgcolor='#0D257C',
+            ft.Container(content=ft.Text('Auditoria',color='white',text_align='center',size=20),bgcolor='#0D257C',
                          width=250,height=50,alignment=ft.alignment.center,border_radius=30)
         ],alignment=ft.MainAxisAlignment.CENTER),
     )
