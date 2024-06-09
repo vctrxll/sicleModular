@@ -14,7 +14,7 @@ def estudiante_view(page: ft.Page):
             )], alignment=ft.MainAxisAlignment.CENTER, spacing=1,  # Espacio entre elementos en la fila
         run_spacing={"xs": 5, "sm": 10, "md": 15, "lg": 20} ), bgcolor='#0D257C', padding=10, height=60,)
 
-        formulario = ft.Container(
+        formulario = ft.ResponsiveRow(
             ft.Column([
                 ft.Container(
                     ft.Row([
@@ -41,8 +41,9 @@ def estudiante_view(page: ft.Page):
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
             padding=page.width * 0.02,
-            height=page.height*0.5,
-            width=page.width*0.5,
+            width=page.width * 0.2 if page.width > 600 else page.width * 0.6,
+            height=page.height * 0.5 if page.width > 600 else page.height * 0.5,
+            bgcolor='#0D257C',
             bgcolor='#0D257C',
             border_radius=40,
         )
