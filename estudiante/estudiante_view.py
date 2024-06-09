@@ -9,7 +9,7 @@ def estudiante_view(page: ft.Page):
             ft.Text('Sistema Integrador de calificaciones de lenguas extranjeras (SICLE)',
                 font_family='Open-Sans',
                 weight=ft.FontWeight.BOLD,
-                size= 20,# Ajuste responsivo del tamaño del texto
+                size= 16,# Ajuste responsivo del tamaño del texto
                 color='white', text_align='center'
             )], alignment=ft.MainAxisAlignment.CENTER, spacing=1,  # Espacio entre elementos en la fila
         run_spacing={"xs": 5, "sm": 10, "md": 15, "lg": 20} ), bgcolor='#0D257C', padding=10, height=60,)
@@ -40,12 +40,11 @@ def estudiante_view(page: ft.Page):
                     ft.FilledButton('Aceptar',on_click = lambda e: loginAlumno(id_usuario.value, pin.value), style=ft.ButtonStyle(bgcolor='#3F844B'))
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
-            padding=20,
-            width=page.width*0.5 if page.width < 600 else page.width*0.21,
-            height=page.width*0.5 if page.width < 600 else page.width*0.21,
+            padding=page.width * 0.02,
+            height=page.height*0.5,
+            width=page.width*0.2,
             bgcolor='#0D257C',
             border_radius=40,
-
         )
 
         login_container= ft.Container(
@@ -68,5 +67,5 @@ def estudiante_view(page: ft.Page):
                 else:
                     page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
                     page.update()
+        #page.add(barra,login_container)
         return ft.View("/estudiante", [barra, login_container])
-    
