@@ -42,7 +42,7 @@ def estudiante_view(page: ft.Page):
             ]),
             padding=page.width * 0.02,
             height=page.height*0.5,
-            width=page.width*0.2,
+            width=page.width*0.5,
             bgcolor='#0D257C',
             border_radius=40,
         )
