@@ -48,11 +48,18 @@ def admin_view(page: ft.Page):
             border_radius=40,
 
         )
-        login_container = ft.Container(
-            content= formulario,
-            expand=True,
-            alignment= ft.alignment.center
-        )
+        
+
+        login_container = ft.ResponsiveRow(
+        [
+            ft.Container(
+                content=formulario,
+                col={"xs": 10, "sm": 8, "md": 3.5, "lg": 3.5},  # Ajusta según tus necesidades
+            )
+        ],
+        alignment=ft.MainAxisAlignment.CENTER,  # Centrado vertical y horizontal
+    )
+
 
         def loginAdmin(id_admin,password):
             user = "12"

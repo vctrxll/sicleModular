@@ -14,7 +14,10 @@ def estudiante_view(page: ft.Page):
             )], alignment=ft.MainAxisAlignment.CENTER, spacing=1,  # Espacio entre elementos en la fila
         run_spacing={"xs": 5, "sm": 10, "md": 15, "lg": 20} ), bgcolor='#0D257C', padding=10, height=60,)
 
-        formulario = ft.ResponsiveRow(
+
+       
+        
+        formulario = ft.Container(
             ft.Column([
                 ft.Container(
                     ft.Row([
@@ -26,7 +29,7 @@ def estudiante_view(page: ft.Page):
                             font_family='OpenSans',
                             text_align='center'
                         )
-                    ], alignment=ft.MainAxisAlignment.CENTER),bgcolor='white', width=page.width *0.4,  height=page.height * 0.05, border_radius=60, padding=page.width *0.002
+                    ], alignment=ft.MainAxisAlignment.CENTER),alignment=ft.alignment.center,bgcolor='white', width=page.width *0.4,  height=page.height * 0.05, border_radius=60, padding=page.width *0.002
                 ),
                 ft.Row([
                     ft.Image('https://i.postimg.cc/rszvbGS4/4.png', border_radius=100, height = page.height *0.12)
@@ -41,18 +44,19 @@ def estudiante_view(page: ft.Page):
                 ], alignment=ft.MainAxisAlignment.CENTER),
             ]),
             padding=page.width * 0.02,
-            width=page.width * 0.2 ,
-            height=page.height * 0.5 
-            bgcolor='#0D257C',
             bgcolor='#0D257C',
             border_radius=40,
         )
 
-        login_container= ft.Container(
-             content= formulario,
-             expand= True,
-             alignment=ft.alignment.center
-        )
+        login_container = ft.ResponsiveRow(
+        [
+            ft.Container(
+                content=formulario,
+                col={"xs": 10, "sm": 8, "md": 3.5, "lg": 3.5},  # Ajusta según tus necesidades
+            )
+        ],
+        alignment=ft.MainAxisAlignment.CENTER,  # Centrado vertical y horizontal
+    )
 
         def loginAlumno(id_alumno, password):
             user = "21350301"
@@ -68,5 +72,7 @@ def estudiante_view(page: ft.Page):
                 else:
                     page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
                     page.update()
-        #page.add(barra,login_container)
+
         return ft.View("/estudiante", [barra, login_container])
+
+    
