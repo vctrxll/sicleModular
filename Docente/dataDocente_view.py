@@ -1,6 +1,7 @@
 import flet as ft
 
 def dataDocente_view(page: ft.Page,id):
+    id_usuario= ft.TextField(hint_text='Numero de control', bgcolor='white', border_radius=20)
     options_letras = [
     ft.dropdown.Option("A"), ft.dropdown.Option("B"), ft.dropdown.Option("C"), ft.dropdown.Option("D"),
     ft.dropdown.Option("E"), ft.dropdown.Option("F"), ft.dropdown.Option("G"), ft.dropdown.Option("H"),
@@ -15,15 +16,6 @@ def dataDocente_view(page: ft.Page,id):
     ft.dropdown.Option("5"), ft.dropdown.Option("6"), ft.dropdown.Option("7"), ft.dropdown.Option("8"),
     ft.dropdown.Option("9"), ft.dropdown.Option("10")
 ]
-    options_numeros = [
-    ft.dropdown.Option("1"), ft.dropdown.Option("2"), ft.dropdown.Option("3"), ft.dropdown.Option("4"),
-    ft.dropdown.Option("5"), ft.dropdown.Option("6"), ft.dropdown.Option("7"), ft.dropdown.Option("8"),
-    ft.dropdown.Option("9"), ft.dropdown.Option("10")
-]
-
-
-    numeros = list(range(1, 11))
-
 
     barra = ft.Container(
         ft.ResponsiveRow(
@@ -91,7 +83,68 @@ def dataDocente_view(page: ft.Page,id):
         visible=True
     )
 
-
+    calificaciones_alumnos = {
+    '21350265': {
+    '1': {'unidad1': 9.00, 'unidad2': 9.20, 'calificacion_final': 9.10},
+    '2': {'unidad1': 9.40, 'unidad2': 8.90, 'calificacion_final': 9.15},
+    '3': {'unidad1': 9.00, 'unidad2': 9.10, 'calificacion_final': 9.05},
+    '4': {'unidad1': 9.20, 'unidad2': 9.00, 'calificacion_final': 9.10},
+    '5': {'unidad1': 9.10, 'unidad2': 9.30, 'calificacion_final': 9.20},
+    '6': {'unidad1': 9.10, 'unidad2': 9.40, 'calificacion_final': 9.25},
+    '7': {'unidad1': 9.30, 'unidad2': 9.20, 'calificacion_final': 9.25},
+    '8': {'unidad1': 9.20, 'unidad2': 9.50, 'calificacion_final': 9.35},
+    '9': {'unidad1': 9.40, 'unidad2': 9.30, 'calificacion_final': 9.35},
+    '10': {'unidad1': 9.50, 'unidad2': 9.10, 'calificacion_final': 9.30},
+},
+    '21350273': {
+        '1': {'unidad1': 9.30, 'unidad2': 8.60, 'calificacion_final': 8.95},
+        '2': {'unidad1': 9.20, 'unidad2': 8.90, 'calificacion_final': 9.05},
+        '3': {'unidad1': 8.90, 'unidad2': 9.10, 'calificacion_final': 9.00},
+        '4': {'unidad1': 9.10, 'unidad2': 8.80, 'calificacion_final': 8.95},
+        '5': {'unidad1': 8.80, 'unidad2': 9.50, 'calificacion_final': 9.15},
+        '6': {'unidad1': 8.60, 'unidad2': 9.40, 'calificacion_final': 8.95},
+        '7': {'unidad1': 9.40, 'unidad2': 8.70, 'calificacion_final': 9.05},
+        '8': {'unidad1': 8.70, 'unidad2': 9.30, 'calificacion_final': 9.00},
+        '9': {'unidad1': 9.00, 'unidad2': 8.50, 'calificacion_final': 8.75},
+        '10': {'unidad1': 9.20, 'unidad2': 8.90, 'calificacion_final': 9.05}
+    },
+    '21350281': {
+        '1': {'unidad1': 9.20, 'unidad2': 8.70, 'calificacion_final': 8.95},
+        '2': {'unidad1': 9.50, 'unidad2': 8.80, 'calificacion_final': 9.15},
+        '3': {'unidad1': 8.60, 'unidad2': 9.10, 'calificacion_final': 8.85},
+        '4': {'unidad1': 9.30, 'unidad2': 8.90, 'calificacion_final': 9.10},
+        '5': {'unidad1': 8.90, 'unidad2': 9.30, 'calificacion_final': 9.10},
+        '6': {'unidad1': 8.20, 'unidad2': 9.50, 'calificacion_final': 8.85},
+        '7': {'unidad1': 9.10, 'unidad2': 8.60, 'calificacion_final': 8.85},
+        '8': {'unidad1': 8.80, 'unidad2': 9.20, 'calificacion_final': 9.00},
+        '9': {'unidad1': 9.60, 'unidad2': 8.70, 'calificacion_final': 9.15},
+        '10': {'unidad1': 8.90, 'unidad2': 9.40, 'calificacion_final': 9.15}
+    },
+    '21350301': {
+        '1': {'unidad1': 8.80, 'unidad2': 9.00, 'calificacion_final': 8.90},
+        '2': {'unidad1': 8.90, 'unidad2': 9.30, 'calificacion_final': 9.10},
+        '3': {'unidad1': 9.20, 'unidad2': 8.90, 'calificacion_final': 9.05},
+        '4': {'unidad1': 8.70, 'unidad2': 9.10, 'calificacion_final': 8.90},
+        '5': {'unidad1': 9.30, 'unidad2': 8.70, 'calificacion_final': 9.00},
+        '6': {'unidad1': 9.00, 'unidad2': 8.60, 'calificacion_final': 8.80},
+        '7': {'unidad1': 8.60, 'unidad2': 9.40, 'calificacion_final': 9.00},
+        '8': {'unidad1': 9.40, 'unidad2': 8.80, 'calificacion_final': 9.10},
+        '9': {'unidad1': 7.00, 'unidad2': 7.00, 'calificacion_final': 7.00},
+        '10': {'unidad1': 8.80, 'unidad2': 9.20, 'calificacion_final': 9.00},
+    },
+    '21350499': {
+        '1': {'unidad1': 9.10, 'unidad2': 8.80, 'calificacion_final': 8.95},
+        '2': {'unidad1': 9.30, 'unidad2': 8.90, 'calificacion_final': 9.10},
+        '3': {'unidad1': 8.70, 'unidad2': 9.30, 'calificacion_final': 9.00},
+        '4': {'unidad1': 9.50, 'unidad2': 8.60, 'calificacion_final': 9.05},
+        '5': {'unidad1': 8.40, 'unidad2': 9.20, 'calificacion_final': 8.80},
+        '6': {'unidad1': 8.90, 'unidad2': 9.10, 'calificacion_final': 9.00},
+        '7': {'unidad1': 9.20, 'unidad2': 8.70, 'calificacion_final': 8.95},
+        '8': {'unidad1': 8.80, 'unidad2': 9.40, 'calificacion_final': 9.10},
+        '9': {'unidad1': 9.30, 'unidad2': 8.90, 'calificacion_final': 9.10},
+        '10': {'unidad1': 8.50, 'unidad2': 9.20, 'calificacion_final': 8.85}
+    }
+}
     grupos = ft.Container(
         ft.Column([
             ft.Row([
@@ -141,6 +194,7 @@ def dataDocente_view(page: ft.Page,id):
                                 ft.DataCell(ft.Text('----')),
                             ]
                         )
+                        for i in range(1, 5)
                     ]
                 )
                  ],alignment=ft.MainAxisAlignment.CENTER)
@@ -148,12 +202,106 @@ def dataDocente_view(page: ft.Page,id):
 
     )
 
+    tabla = ft.Container(
+        ft.Column([
+                    ft.Container(
+                    expand=True,
+                    content= ft.Column(
+                        scroll="auto",
+                        controls=[
+
+                            ft.ResponsiveRow([
+                                ft.Container(
+                                    ft.DataTable(
+                                        columns=[
+                                            ft.DataColumn(ft.Text("Modulo")),
+                                            ft.DataColumn(ft.Text("   ")),
+                                            ft.DataColumn(ft.Text("Parcial 1")),
+                                            ft.DataColumn(ft.Text("Parcial 2")),
+                                            ft.DataColumn(ft.Text("Final")),
+                                        ],
+                                        rows=[
+                                            ft.DataRow(
+                                                cells=[
+                                                    ft.DataCell(ft.Text(f"Modulo {i}")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                ]
+                                            )
+                                            for i in range(1, 6)
+                                        ], column_spacing=20,
+                                    ), col={"xs": 10, "sm": 10, "md": 6, "lg": 4}
+                                ),
+
+                                ft.Container(
+                                    ft.DataTable(
+                                        columns=[
+                                            ft.DataColumn(ft.Text("Modulo")),
+                                            ft.DataColumn(ft.Text("   ")),
+                                            ft.DataColumn(ft.Text("Parcial 1")),
+                                            ft.DataColumn(ft.Text("Parcial 2")),
+                                            ft.DataColumn(ft.Text("Final")),
+                                        ],
+                                        rows=[
+                                            ft.DataRow(
+                                                cells=[
+                                                    ft.DataCell(ft.Text(f"Modulo {i}")),
+                                                    ft.DataCell(ft.Text('')),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text("")),
+                                                ]
+                                            )
+                                            for i in range(6, 11)
+                                        ],
+                                        column_spacing=20,
+                                    ), col={"xs": 10, "sm": 10, "md": 6, "lg": 4}
+                                )
+                            ],alignment=ft.MainAxisAlignment.CENTER,),
+                        ]
+                    )
+                )
+        ])
+    )
+
+
     calificaciones = ft.Container(
-        ft.Row([
+        ft.Column([
+            ft.Row([
             ft.Container(content=ft.Text('Calificaciones',color='white',text_align='center',size=20),bgcolor='#0D257C',
                          width=250,height=50,alignment=ft.alignment.center,border_radius=30)
         ],alignment=ft.MainAxisAlignment.CENTER),
+
+        ft.Divider(height=page.height *0.06, color='transparent'),
+
+        ft.ResponsiveRow([
+            ft.Container(
+                ft.Column([
+                    id_usuario
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+                ),
+                col={"xs": 12, "sm": 6, "md": 4, "lg": 3}
+            ),
+            #ft.Divider(height=page.height *0.002, color='transparent'),
+
+            ft.Container(
+                ft.Column([
+                ft.FilledButton('Aceptar', style=ft.ButtonStyle(bgcolor='#3F844B'))
+                ],
+                
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER),
+                col={"xs": 12, "sm": 6, "md": 4, "lg": 3}
+            )
+        ], alignment= ft.MainAxisAlignment.CENTER),
+
+        tabla
+        ])
     )
+
+    
     
     layout = ft.Row(
         [
