@@ -58,20 +58,19 @@ def admin_view(page: ft.Page):
         alignment=ft.MainAxisAlignment.CENTER,  # Centrado vertical y horizontal
     )
 
-
-        def loginAdmin(id_admin,password):
-            user = "12"
+    
+        def loginAdmin(id_admin, password):
+            id = "12"
             pin = "12"
-            if user != id_admin:
+            if id_admin != id:
                 page.snack_bar = ft.SnackBar(ft.Text("ID no existe"), open=True)
                 page.update()
-            else:            
-                if pin == password:
-                    print("Inicio de sesión exitoso")
-                    page.views.append(dataAdmin_view(page,id_admin))
-                    page.update()
-                else:
-                    page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
-                    page.update()
+            elif pin == password:
+                print("Inicio de sesión exitoso")
+                page.views.append(dataAdmin_view(page,id_admin))
+                page.update()
+            else:
+                page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
+                page.update()
     
         return ft.View("/admin", [barra, login_container])

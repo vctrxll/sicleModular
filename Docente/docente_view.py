@@ -1,5 +1,4 @@
 import flet as ft
-import requests
 from Docente.dataDocente_view import dataDocente_view
 
 def docente_view(page: ft.Page):
@@ -45,6 +44,9 @@ def docente_view(page: ft.Page):
             page.update()
         elif pin == password:
             print('login correcto')
+            print("Inicio de sesión exitoso")
+            page.views.append(dataDocente_view(page,id_profesor))
+            page.update()
         else:
             page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
             page.update()
