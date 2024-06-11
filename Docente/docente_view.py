@@ -38,17 +38,17 @@ def docente_view(page: ft.Page):
     )
 
     def loginDocente(id_profesor, password):
-        url = f"https://dbsicle1.viictor-axel11.workers.dev/loginProfesor?id_profesor={id_profesor}&pin={password}"
-        response = requests.get(url)
-        result = response.json()
-        
-        if not result['success']:
-            page.snack_bar = ft.SnackBar(ft.Text(result['message']), open=True)
+        id = "12"
+        pin = "12"
+        if id_profesor != id:
+            page.snack_bar = ft.SnackBar(ft.Text("ID no existe"), open=True)
             page.update()
+        elif pin == password:
+            print('login correcto')
         else:
-            print("Inicio de sesión exitoso")
-            page.views.append(dataDocente_view(page, id_profesor))
+            page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
             page.update()
+            
 
 
 
