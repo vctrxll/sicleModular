@@ -1,12 +1,89 @@
 import flet as ft
-
 def dataAlumno_view(page: ft.Page, id_usuario):
-    numControl = "21350301"
+    datos_alumnos = {
+    '21350265': {'apellido_paterno': 'Jorgue', 'apellido_materno': 'Cruz', 'nombres': 'Susana Lizeth', 'carrera': 'ISC', 'genero': 'F'},
+    '21350273': {'apellido_paterno': 'Martinez', 'apellido_materno': 'Ignacio', 'nombres': 'Guadalupe', 'carrera': 'ISC', 'genero': 'F'},
+    '21350281': {'apellido_paterno': 'Palacios', 'apellido_materno': 'Cabrera', 'nombres': 'Lady Sthefany', 'carrera': 'ISC', 'genero': 'F'},
+    '21350301': {'apellido_paterno': 'Rodriguez', 'apellido_materno': 'Ocampo', 'nombres': 'Victor Axel', 'carrera': 'ISC', 'genero': 'M'},
+    '21350499': {'apellido_paterno': 'Cabrera', 'apellido_materno': 'Vidal', 'nombres': 'Angel David', 'carrera': 'ISC', 'genero': 'M'}
+}
+    
+    calificaciones_alumnos = {
+    '21350265': {
+    '1': {'unidad1': 9.00, 'unidad2': 9.20, 'calificacion_final': 9.10},
+    '2': {'unidad1': 9.40, 'unidad2': 8.90, 'calificacion_final': 9.15},
+    '3': {'unidad1': 9.00, 'unidad2': 9.10, 'calificacion_final': 9.05},
+    '4': {'unidad1': 9.20, 'unidad2': 9.00, 'calificacion_final': 9.10},
+    '5': {'unidad1': 9.10, 'unidad2': 9.30, 'calificacion_final': 9.20},
+    '6': {'unidad1': 9.10, 'unidad2': 9.40, 'calificacion_final': 9.25},
+    '7': {'unidad1': 9.30, 'unidad2': 9.20, 'calificacion_final': 9.25},
+    '8': {'unidad1': 9.20, 'unidad2': 9.50, 'calificacion_final': 9.35},
+    '9': {'unidad1': 9.40, 'unidad2': 9.30, 'calificacion_final': 9.35},
+    '10': {'unidad1': 9.50, 'unidad2': 9.10, 'calificacion_final': 9.30},
+},
+    '21350273': {
+        '1': {'unidad1': 9.30, 'unidad2': 8.60, 'calificacion_final': 8.95},
+        '2': {'unidad1': 9.20, 'unidad2': 8.90, 'calificacion_final': 9.05},
+        '3': {'unidad1': 8.90, 'unidad2': 9.10, 'calificacion_final': 9.00},
+        '4': {'unidad1': 9.10, 'unidad2': 8.80, 'calificacion_final': 8.95},
+        '5': {'unidad1': 8.80, 'unidad2': 9.50, 'calificacion_final': 9.15},
+        '6': {'unidad1': 8.60, 'unidad2': 9.40, 'calificacion_final': 8.95},
+        '7': {'unidad1': 9.40, 'unidad2': 8.70, 'calificacion_final': 9.05},
+        '8': {'unidad1': 8.70, 'unidad2': 9.30, 'calificacion_final': 9.00},
+        '9': {'unidad1': 9.00, 'unidad2': 8.50, 'calificacion_final': 8.75},
+        '10': {'unidad1': 9.20, 'unidad2': 8.90, 'calificacion_final': 9.05}
+    },
+    '21350281': {
+        '1': {'unidad1': 9.20, 'unidad2': 8.70, 'calificacion_final': 8.95},
+        '2': {'unidad1': 9.50, 'unidad2': 8.80, 'calificacion_final': 9.15},
+        '3': {'unidad1': 8.60, 'unidad2': 9.10, 'calificacion_final': 8.85},
+        '4': {'unidad1': 9.30, 'unidad2': 8.90, 'calificacion_final': 9.10},
+        '5': {'unidad1': 8.90, 'unidad2': 9.30, 'calificacion_final': 9.10},
+        '6': {'unidad1': 8.20, 'unidad2': 9.50, 'calificacion_final': 8.85},
+        '7': {'unidad1': 9.10, 'unidad2': 8.60, 'calificacion_final': 8.85},
+        '8': {'unidad1': 8.80, 'unidad2': 9.20, 'calificacion_final': 9.00},
+        '9': {'unidad1': 9.60, 'unidad2': 8.70, 'calificacion_final': 9.15},
+        '10': {'unidad1': 8.90, 'unidad2': 9.40, 'calificacion_final': 9.15}
+    },
+    '21350301': {
+        '1': {'unidad1': 8.80, 'unidad2': 9.00, 'calificacion_final': 8.90},
+        '2': {'unidad1': 8.90, 'unidad2': 9.30, 'calificacion_final': 9.10},
+        '3': {'unidad1': 9.20, 'unidad2': 8.90, 'calificacion_final': 9.05},
+        '4': {'unidad1': 8.70, 'unidad2': 9.10, 'calificacion_final': 8.90},
+        '5': {'unidad1': 9.30, 'unidad2': 8.70, 'calificacion_final': 9.00},
+        '6': {'unidad1': 9.00, 'unidad2': 8.60, 'calificacion_final': 8.80},
+        '7': {'unidad1': 8.60, 'unidad2': 9.40, 'calificacion_final': 9.00},
+        '8': {'unidad1': 9.40, 'unidad2': 8.80, 'calificacion_final': 9.10},
+        '9': {'unidad1': 7.00, 'unidad2': 7.00, 'calificacion_final': 7.00},
+        '10': {'unidad1': 8.80, 'unidad2': 9.20, 'calificacion_final': 9.00},
+    },
+    '21350499': {
+        '1': {'unidad1': 9.10, 'unidad2': 8.80, 'calificacion_final': 8.95},
+        '2': {'unidad1': 9.30, 'unidad2': 8.90, 'calificacion_final': 9.10},
+        '3': {'unidad1': 8.70, 'unidad2': 9.30, 'calificacion_final': 9.00},
+        '4': {'unidad1': 9.50, 'unidad2': 8.60, 'calificacion_final': 9.05},
+        '5': {'unidad1': 8.40, 'unidad2': 9.20, 'calificacion_final': 8.80},
+        '6': {'unidad1': 8.90, 'unidad2': 9.10, 'calificacion_final': 9.00},
+        '7': {'unidad1': 9.20, 'unidad2': 8.70, 'calificacion_final': 8.95},
+        '8': {'unidad1': 8.80, 'unidad2': 9.40, 'calificacion_final': 9.10},
+        '9': {'unidad1': 9.30, 'unidad2': 8.90, 'calificacion_final': 9.10},
+        '10': {'unidad1': 8.50, 'unidad2': 9.20, 'calificacion_final': 8.85}
+    }
+}
+    
+    alumno = datos_alumnos[id_usuario]
+    cali = calificaciones_alumnos.get(id_usuario)
+    # Extraer las calificaciones finales
+    calificaciones_finales = [unidad['calificacion_final'] for unidad in cali.values()]
+
+    # Calcular el promedio de las calificaciones finales
+    promedio_calificaciones_finales = sum(calificaciones_finales) / len(calificaciones_finales)
+    numControl = id_usuario
     extension = "(TX) TUX"
     coordinador = " Lic. Alberto Bravo Nava"
-    nombre = "Victor Axel Rodriguez Ocampo"
+    nombre = f"{alumno['nombres']} {alumno['apellido_paterno']} {alumno['apellido_materno']}"
     modalidad = "Presencial"
-    carrera = "ISC"
+    carrera = f"{alumno['carrera']}"
 
     barra = ft.Container(
         ft.ResponsiveRow(
@@ -122,6 +199,7 @@ def dataAlumno_view(page: ft.Page, id_usuario):
                     ],
                     alignment=ft.MainAxisAlignment.CENTER,
                 ),
+
                 ft.Container(
                     expand=True,
                     content= ft.Column(
@@ -143,9 +221,9 @@ def dataAlumno_view(page: ft.Page, id_usuario):
                                                 cells=[
                                                     ft.DataCell(ft.Text(f"Modulo {i}")),
                                                     ft.DataCell(ft.Text("")),
-                                                    ft.DataCell(ft.Text("")),
-                                                    ft.DataCell(ft.Text("")),
-                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text(cali[f"{i}"]['unidad1'])),
+                                                    ft.DataCell(ft.Text(cali[f"{i}"]['unidad2'])),
+                                                    ft.DataCell(ft.Text(cali[f"{i}"]['calificacion_final'])),
                                                 ]
                                             )
                                             for i in range(1, 6)
@@ -166,10 +244,10 @@ def dataAlumno_view(page: ft.Page, id_usuario):
                                             ft.DataRow(
                                                 cells=[
                                                     ft.DataCell(ft.Text(f"Modulo {i}")),
-                                                    ft.DataCell(ft.Text("")),
-                                                    ft.DataCell(ft.Text("")),
-                                                    ft.DataCell(ft.Text("")),
-                                                    ft.DataCell(ft.Text("")),
+                                                    ft.DataCell(ft.Text('')),
+                                                    ft.DataCell(ft.Text(cali[f"{i}"]['unidad1'])),
+                                                    ft.DataCell(ft.Text(cali[f"{i}"]['unidad2'])),
+                                                    ft.DataCell(ft.Text(cali[f"{i}"]['calificacion_final'])),
                                                 ]
                                             )
                                             for i in range(6, 11)
@@ -179,7 +257,7 @@ def dataAlumno_view(page: ft.Page, id_usuario):
                                 )
                             ],alignment=ft.MainAxisAlignment.CENTER,),
                             ft.Row([
-                                ft.Text("Calificacion Final: ")
+                                ft.Text("Calificacion Final: " + str(promedio_calificaciones_finales))
                             ], alignment= ft.MainAxisAlignment.CENTER),
                         ]
                     )
@@ -229,4 +307,5 @@ def dataAlumno_view(page: ft.Page, id_usuario):
     )
     navigation_rail.visible = True
     return ft.View("/estudiante", [barra,layout])
+
     

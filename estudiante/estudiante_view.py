@@ -1,11 +1,19 @@
 import flet as ft
-import requests
 from estudiante.dataAlumno_view import dataAlumno_view 
+
+numeros_control_nip = [
+    {'numero_control': "21350301", 'nip': "4955"},
+    {'numero_control': "21350265", 'nip': "1909"},
+    {'numero_control': "21350281", 'nip': "1718"},
+    {'numero_control': "21350499", 'nip': "0302"},
+    {'numero_control': "21350273", 'nip': "1212"}
+]
 
 
 def estudiante_view(page: ft.Page):
         id_usuario= ft.TextField(hint_text='Usuario Estudiante', bgcolor='white', border_radius=20)
         pin = ft.TextField(hint_text='Clave de acceso', bgcolor='white', border_radius=20, password = True, can_reveal_password = True)
+
         barra = ft.Container(ft.ResponsiveRow([
             ft.Text('Sistema Integrador de calificaciones de lenguas extranjeras (SICLE)',
                 font_family='Open-Sans',
@@ -14,9 +22,6 @@ def estudiante_view(page: ft.Page):
                 color='white', text_align='center'
             )], alignment=ft.MainAxisAlignment.CENTER, spacing=1,  # Espacio entre elementos en la fila
         run_spacing={"xs": 5, "sm": 10, "md": 15, "lg": 20} ), bgcolor='#0D257C', padding=10, height=60,)
-
-
-       
         
         formulario = ft.Container(
             ft.Column([
@@ -60,18 +65,20 @@ def estudiante_view(page: ft.Page):
     )
 
         def loginAlumno(id_alumno, password):
-                url = f"https://dbsicle1.viictor-axel11.workers.dev/loginAlumno?id_alumno={id_alumno}&pin={password}"
-                response = requests.get(url)
-                result = response.json()
-                
-                if not result['success']:
-                    page.snack_bar = ft.SnackBar(ft.Text(result['message']), open=True)
+            usuario = next((u for u in numeros_control_nip if u['numero_control'] == id_alumno), None)
+            if usuario:
+                if usuario['nip'] == password:
+                    print("Inicio de sesión exitoso para el alumno")
+                    page.views.append(dataAlumno_view(page, id_alumno))
                     page.update()
                 else:
-                    print("Inicio de sesión exitoso")
-                    page.views.append(dataAlumno_view(page, id_alumno))
+                    page.snack_bar = ft.SnackBar(ft.Text("PIN incorrecto"), open=True)
+                    page.update()
+            else:
+                    page.snack_bar = ft.SnackBar(ft.Text("ID no existe"), open=True)
                     page.update()
 
         return ft.View("/estudiante", [barra, login_container])
 
+    
     
